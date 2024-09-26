@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cvfsswsglj3ad"]
+
+[node name="Player_topdown" type="CharacterBody2D"]
