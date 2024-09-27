@@ -715,7 +715,7 @@ tint_progress = Color(0.570891, 0, 0.0632315, 1)
 script = SubResource("GDScript_pn4qe")
 
 [node name="Timer" type="Timer" parent="Collect"]
-wait_time = 3.0
+wait_time = 20.0
 autostart = true
 
 [node name="Gold" parent="." instance=ExtResource("7_a0b3x")]
@@ -733,5 +733,6 @@ autostart = true
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource("OccluderPolygon2D_6qpcv")
 
+[connection signal="health_changed" from="Player/Player" to="." method="_on_player_health_changed"]
 [connection signal="timeout" from="Collect/Timer" to="Collect" method="_on_timer_timeout"]
 [connection signal="timeout" from="DeyNight" to="." method="_on_dey_night_timeout"]

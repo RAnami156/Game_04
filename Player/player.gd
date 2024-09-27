@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal health_changet(new_health)
+signal health_changed (new_health)
 
 enum {
 	IDLE,
@@ -167,5 +167,5 @@ func damage_state() :
 func _on_damage_received (enemy_damage) :
 	state = DAMAGE
 	health -= enemy_damage
-	emit_signal("health_changet", health)
+	emit_signal("health_changed", health)
 	print(health)

@@ -4,6 +4,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") #это 
 
 @onready var anim = $AnimatedSprite2D
 var chase = false  #погоня
+var damage = 20
 var speed = 100
 var alive = true
 
@@ -44,7 +45,8 @@ func _on_death_body_entered(body):
 		
 #тут я убиваю его касанием 
 func _on_death_2_body_entered(body):
-	body.health -=40
+	Signals.emit_signal("enemy_attack", damage)
+	#body.health -=20
 	death()
 	
 #это функция для смерти

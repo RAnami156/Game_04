@@ -49,7 +49,7 @@ func _on_dey_night_timeout():
 		day_count += 1
 		set_day_text()
 		animPlayer.play("day_text_fade_in")
-		await  get_tree().create_timer(3).timeout
+		await  get_tree().create_timer(20).timeout
 		animPlayer.play("day_text_fade")
 		
 func set_day_text() :
@@ -60,3 +60,8 @@ func set_day_text() :
 
 func _on_player_health_changet(new_health):
 	hp_bar.value = new_health
+
+
+func _on_player_health_changed(new_health: Variant) -> void:
+	hp_bar.value = new_health
+	
