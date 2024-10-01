@@ -82,7 +82,8 @@ func _physics_process(delta):
 
 func move_state ():
 	var direction = Input.get_axis("left", "right")
-	
+
+	#cheats	
 	if Input.is_action_just_pressed("megaattack"):
 		damage_basic += 100
 		
