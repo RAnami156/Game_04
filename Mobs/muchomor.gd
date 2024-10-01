@@ -4,7 +4,10 @@ enum {
 	IDLE,
 	ATTACK,
 	CHASE,
-	RUN
+	RUN,
+	DAMAGE,
+	DEATH,
+	RECOVER
 }
 
 var state: int = 0:
@@ -19,6 +22,12 @@ var state: int = 0:
 				chase_state()
 			RUN:
 				run_state()
+			DAMAGE:
+				damage_state()
+			DEATH:
+				death_state()
+			RECOVER:
+				recover_state()
 
 @onready var animPlayer = $AnimationPlayer
 @onready var sprite = $AnimatedSprite2D
@@ -27,10 +36,13 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var player
 var chase = false
 var speed = 50
-var damage = 10
+
+var damage = 20
+var health = 100
 
 func _ready():
 	Signals.connect("player_position_update", Callable(self, "_on_player_position_update"))
+	Signals.connect("player_attack", Callable(self,"_on_damage_received"))
 
 func _on_player_position_update(player_pos):
 	player = player_pos
@@ -60,8 +72,6 @@ func _on_detector_body_exited(body):
 	
 func idle_state():
 	animPlayer.play("Idle")
-	await get_tree().create_timer(1).timeout
-	$AttackDirection/AttackRange/CollisionShape2D.disabled = false
 
 	# Гриб остается в состоянии IDLE до входа в зону детектора
 	if chase:
@@ -71,8 +81,7 @@ func attack_state():
 	velocity.x = 0  # Останавливаем движение при атаке
 	animPlayer.play("Attack")
 	await animPlayer.animation_finished
-	$AttackDirection/AttackRange/CollisionShape2D.disabled = true
-	state = IDLE
+	state = IDLE  # Переход в состояние восстановления после атаки
 
 func chase_state():
 	var direction = (player - self.position).normalized()
@@ -83,6 +92,7 @@ func chase_state():
 		sprite.flip_h = false
 		$AttackDirection.rotation_degrees = 0
 	state = RUN  # Устанавливаем состояние в RUN после определения направления
+	
 
 func run_state():
 	var direction = (player - self.position).normalized()
@@ -92,8 +102,37 @@ func run_state():
 	else:
 		velocity.x = 0
 		state = IDLE
-
+		
+func recover_state():
+	animPlayer.play("Recover")
+	await animPlayer.animation_finished
+	if chase:
+		state = CHASE  # Если враг продолжает преследовать, возвращаемся в CHASE
+	else:
+		state = IDLE
+		
+func damage_state() :
+	animPlayer.play("Damage")
+	await animPlayer.animation_finished
+	state = IDLE
 	
+func death_state() :
+	velocity.x = 0
+	animPlayer.play("Death")
+	await animPlayer.animation_finished
+	queue_free()
+	
+	
+
 
 func _on_hit_box_area_entered(area):
 	Signals.emit_signal("enemy_attack", damage)
+	
+func _on_damage_received (player_damage):
+	health -= player_damage
+	print (player_damage)
+	if health <= 0 :
+		state = DEATH
+	else :
+		state = IDLE
+		state = DAMAGE

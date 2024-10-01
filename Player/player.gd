@@ -29,12 +29,18 @@ var run_speed = 1
 var combo = false
 var attack_down = false
 var player_pos #хранение координат
+var damage_basic = 10
+var damage_multiplier = 1
+var damage_current 
 
 func _ready():
 	Signals.connect("enemy_attack",Callable(self, "_on_damage_received"))
 	health = max_health
 
 func _physics_process(delta):
+	
+	damage_current = damage_basic * damage_multiplier
+	
 	match state :
 		MOVE :
 			move_state()
@@ -76,6 +82,12 @@ func _physics_process(delta):
 
 func move_state ():
 	var direction = Input.get_axis("left", "right")
+	
+	if Input.is_action_just_pressed("megaattack"):
+		damage_basic += 100
+		
+	
+	
 	#прыжок
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -97,9 +109,11 @@ func move_state ():
 			
 	if direction == -1 :
 		anim.flip_h = true
+		$AttackDirection.rotation_degrees = 180
 		
 	elif direction == 1 :
 		anim.flip_h = false 
+		$AttackDirection.rotation_degrees = 0
 		
 	if Input.is_action_pressed("run") :
 		run_speed = 2
@@ -128,6 +142,7 @@ func slide_state() :
 	state = MOVE
 	
 func attack_state() :
+	damage_multiplier = 1
 	if Input.is_action_just_pressed("attack") and combo == true :
 		state = ATTACK2
 	velocity.x = 0
@@ -137,6 +152,7 @@ func attack_state() :
 	state = MOVE
 	
 func attack_state2():
+	damage_multiplier = 1.2
 	if Input.is_action_just_pressed("attack") and combo == true :
 		state = ATTACK3
 	animPlayer.play("Attack2")
@@ -144,6 +160,7 @@ func attack_state2():
 	state = MOVE
 	
 func attack_state3() : 
+	damage_multiplier = 2
 	animPlayer.play("Attack 3")
 	await animPlayer.animation_finished
 	state = MOVE
@@ -165,7 +182,20 @@ func damage_state() :
 	state = MOVE 
 	
 func _on_damage_received (enemy_damage) :
-	state = DAMAGE
-	health -= enemy_damage
+	if state == BLOCK :
+		enemy_damage /= 2
+	elif state == SLIDE :
+		enemy_damage = 0
+	else :
+		state = DAMAGE
+		health -= enemy_damage
+	
+	
 	emit_signal("health_changed", health)
 	print(health)
+	
+	
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	Signals.emit_signal("player_attack",damage_current)
+	
+	
