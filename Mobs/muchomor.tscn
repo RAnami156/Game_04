@@ -568,7 +568,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fr4l3"]
-size = Vector2(22, 20.0624)
+size = Vector2(41, 20.0624)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sxq4g"]
 radius = 115.018
@@ -584,8 +584,8 @@ shape = SubResource("CapsuleShape2D_xp771")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -12.0749)
 sprite_frames = SubResource("SpriteFrames_vcsti")
-animation = &"Attack"
-frame = 7
+animation = &"Idle"
+autoplay = "Idle"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -600,7 +600,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackDirection/AttackRange"]
-position = Vector2(20, -0.0312238)
+position = Vector2(10.5, -0.0312238)
 shape = SubResource("RectangleShape2D_fr4l3")
 
 [node name="DamageBox" parent="AttackDirection" instance=ExtResource("7_ykf3j")]
@@ -621,7 +621,6 @@ position = Vector2(20, 0)
 disabled = false
 
 [node name="Detector" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -631,7 +630,7 @@ shape = SubResource("CircleShape2D_sxq4g")
 [node name="PointLight2D" type="PointLight2D" parent="."]
 
 [node name="MobeHealth" parent="." instance=ExtResource("8_na6ip")]
-position = Vector2(0, -12.0749)
+position = Vector2(8, -17.1062)
 
 [connection signal="body_entered" from="AttackDirection/AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="area_entered" from="AttackDirection/DamageBox/HitBox" to="." method="_on_hit_box_area_entered"]
