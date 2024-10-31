@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://d0emk7a06y3gh"]
+[gd_scene load_steps=54 format=3 uid="uid://d0emk7a06y3gh"]
 
 [ext_resource type="Script" path="res://Mobs/muchomor.gd" id="1_5x6cd"]
 [ext_resource type="Texture2D" uid="uid://cb2dmlhm8heol" path="res://Monsters_Creatures_Fantasy/Mushroom/Attack.png" id="1_lhl4x"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dklybx4hl6vuy" path="res://Monsters_Creatures_Fantasy/Mushroom/Death.png" id="3_s6k3q"]
 [ext_resource type="Texture2D" uid="uid://brc1njsdnj3yg" path="res://Monsters_Creatures_Fantasy/Mushroom/Run.png" id="5_ao1wp"]
 [ext_resource type="PackedScene" uid="uid://be6iq6efph367" path="res://damage_box.tscn" id="7_ykf3j"]
-[ext_resource type="PackedScene" uid="uid://cvjls80orsj8g" path="res://mobe_health.tscn" id="8_na6ip"]
+[ext_resource type="PackedScene" uid="uid://cfcyy24ummsoy" path="res://mobe_heals.tscn" id="8_ysnq0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xp771"]
 height = 28.1749
@@ -573,9 +573,13 @@ size = Vector2(41, 20.0624)
 [sub_resource type="CircleShape2D" id="CircleShape2D_sxq4g"]
 radius = 115.018
 
+[sub_resource type="SystemFont" id="SystemFont_u1yn1"]
+font_stretch = 125
+
 [node name="Muchomor" type="CharacterBody2D"]
 scale = Vector2(1, 0.993794)
 collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_5x6cd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -584,7 +588,7 @@ shape = SubResource("CapsuleShape2D_xp771")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -12.0749)
 sprite_frames = SubResource("SpriteFrames_vcsti")
-animation = &"Idle"
+animation = &"Attack"
 autoplay = "Idle"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -621,20 +625,35 @@ position = Vector2(20, 0)
 disabled = false
 
 [node name="Detector" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
 shape = SubResource("CircleShape2D_sxq4g")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="MobeHeals" parent="." instance=ExtResource("8_ysnq0")]
+position = Vector2(0, -28.1749)
+scale = Vector2(0.1, 0.1)
 
-[node name="MobeHealth" parent="." instance=ExtResource("8_na6ip")]
-position = Vector2(8, -17.1062)
+[node name="HealthBar" parent="MobeHeals" index="0"]
+offset_left = -131.0
+offset_top = -20.0
+offset_right = 130.0
+offset_bottom = 61.0
+
+[node name="DamageText" parent="MobeHeals" index="1"]
+offset_right = 74.0
+offset_bottom = -5.0
+theme_override_fonts/font = SubResource("SystemFont_u1yn1")
+theme_override_font_sizes/font_size = 70
 
 [connection signal="body_entered" from="AttackDirection/AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="area_entered" from="AttackDirection/DamageBox/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
 [connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]
+[connection signal="damage_received" from="MobeHeals" to="." method="_on_mobe_heals_damage_received"]
+[connection signal="no_health" from="MobeHeals" to="." method="_on_mobe_heals_no_health"]
 
 [editable path="AttackDirection/DamageBox"]
+[editable path="MobeHeals"]

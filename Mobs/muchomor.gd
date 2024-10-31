@@ -38,11 +38,11 @@ var chase = false
 var speed = 100
 
 var damage = 20
-var health = 100
+
 
 func _ready():
 	Signals.connect("player_position_update", Callable(self, "_on_player_position_update"))
-	Signals.connect("player_attack", Callable(self,"_on_damage_received"))
+	
 
 func _on_player_position_update(player_pos):
 	player = player_pos
@@ -72,7 +72,6 @@ func _on_detector_body_exited(body):
 	
 func idle_state():
 	animPlayer.play("Idle")
-
 	# Гриб остается в состоянии IDLE до входа в зону детектора
 	if chase:
 		state = CHASE
@@ -107,14 +106,14 @@ func recover_state():
 	animPlayer.play("Recover")
 	await animPlayer.animation_finished
 	if chase:
-		state = CHASE  # Если враг продолжает преследовать, возвращаемся в CHASE
+		state = ATTACK  # Если враг продолжает преследовать, возвращаемся в CHASE
 	else:
-		state = IDLE
+		state = ATTACK
 		
 func damage_state() :
 	animPlayer.play("Damage")
 	await animPlayer.animation_finished
-	state = IDLE
+	state = ATTACK
 	
 func death_state() :
 	velocity.x = 0
@@ -128,11 +127,9 @@ func death_state() :
 func _on_hit_box_area_entered(area):
 	Signals.emit_signal("enemy_attack", damage)
 	
-func _on_damage_received (player_damage):
-	health -= player_damage
-	print (player_damage)
-	if health <= 0 :
-		state = DEATH
-	else :
-		state = IDLE
-		state = DAMAGE
+func _on_mobe_heals_no_health() -> void:
+	state = DEATH
+	
+func _on_mobe_heals_damage_received() -> void:
+	state = IDLE
+	state = DAMAGE
