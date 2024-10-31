@@ -636,7 +636,7 @@ position = Vector2(477, 514)
 position = Vector2(912, 544)
 
 [node name="Muchomor" parent="Monster" instance=ExtResource("14_8w43m")]
-position = Vector2(-807, 607)
+position = Vector2(-595, 610)
 
 [node name="Dikor" type="Node2D" parent="."]
 
