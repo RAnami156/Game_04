@@ -575,6 +575,7 @@ radius = 115.018
 
 [sub_resource type="SystemFont" id="SystemFont_u1yn1"]
 font_stretch = 125
+subpixel_positioning = 0
 
 [node name="Muchomor" type="CharacterBody2D"]
 scale = Vector2(1, 0.993794)
