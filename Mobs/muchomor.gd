@@ -33,7 +33,7 @@ var state: int = 0:
 @onready var sprite = $AnimatedSprite2D
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var player
+var player = null
 var chase = false
 var speed = 100
 var damage = 20
@@ -56,6 +56,15 @@ func _physics_process(delta):
 		chase_state()
 	if state == RUN:
 		run_state()
+		
+	if player != null :
+		var direction = (player - self.position).normalized()
+		if direction.x < 0:
+			sprite.flip_h = true
+			$AttackDirection.rotation_degrees = 180
+		else:
+			sprite.flip_h = false
+			$AttackDirection.rotation_degrees = 0
 
 	move_and_slide()
 
@@ -95,13 +104,6 @@ func attack_state():
 func chase_state():
 	if is_dead:
 		return  # Игнорировать chase_state, если объект мертв
-	var direction = (player - self.position).normalized()
-	if direction.x < 0:
-		sprite.flip_h = true
-		$AttackDirection.rotation_degrees = 180
-	else:
-		sprite.flip_h = false
-		$AttackDirection.rotation_degrees = 0
 	state = RUN  # Устанавливаем состояние в RUN после определения направления
 
 func run_state():
