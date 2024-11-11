@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c0phno5qbfrrr"]
+[gd_scene load_steps=15 format=3 uid="uid://c0phno5qbfrrr"]
 
 [ext_resource type="Texture2D" uid="uid://b7li0b80qry6s" path="res://Monsters_Creatures_Fantasy/Skeleton/Idle.png" id="1_ll3w6"]
 [ext_resource type="Script" path="res://Mobs/skelet.gd" id="1_m64eb"]
@@ -76,6 +76,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_omjc7"]
 size = Vector2(14, 29)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_x8072"]
+radius = 113.159
+
 [node name="Skelet" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_m64eb")
@@ -91,3 +94,13 @@ frame_progress = 0.322368
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 0.5)
 shape = SubResource("RectangleShape2D_omjc7")
+
+[node name="Detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+shape = SubResource("CircleShape2D_x8072")
+
+[connection signal="body_entered" from="Detector" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]
