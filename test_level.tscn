@@ -481,9 +481,12 @@ position = Vector2(381, 609)
 [node name="Player" parent="." instance=ExtResource("3_pm02r")]
 position = Vector2(533, 609)
 
-[node name="Label" type="Label" parent="."]
-offset_left = 20.0
-offset_top = 23.0
-offset_right = 60.0
-offset_bottom = 46.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Fps" type="Label" parent="CanvasLayer"]
+offset_left = 1069.0
+offset_top = 2.0
+offset_right = 1109.0
+offset_bottom = 25.0
+text = "fps:"
 script = ExtResource("4_8tnni")
