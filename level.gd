@@ -26,14 +26,14 @@ func _ready():
 
 func morning_state() :
 	var tween = get_tree().create_tween()
-	tween.tween_property(light, "energy", 0.2, 7)
+	tween.tween_property(light, "energy", 0.2, 20)
 	var tween1 = get_tree().create_tween()
-	tween1.tween_property(pointlight, "energy", 0, 7)
+	tween1.tween_property(pointlight, "energy", 0, 20)
 func evening_state() :
 	var tween = get_tree().create_tween()
-	tween.tween_property(light, "energy", 0.95, 7)
+	tween.tween_property(light, "energy", 0.95, 20)
 	var tween1 = get_tree().create_tween()
-	tween1.tween_property(pointlight, "energy", 1.5, 7)
+	tween1.tween_property(pointlight, "energy", 1.5, 20)
 
 
 func _on_dey_night_timeout():
