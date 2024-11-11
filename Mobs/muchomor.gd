@@ -35,7 +35,7 @@ var state: int = 0:
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var player = null
 var chase = false
-var speed = 100
+var speed = 50
 var damage = 20
 var is_dead = false  # Флаг для проверки, что объект "мертв" и не должен реагировать
 

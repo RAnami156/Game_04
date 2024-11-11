@@ -516,7 +516,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Label3:modulate")
+tracks/0/path = NodePath("Day:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -531,7 +531,7 @@ resource_name = "day_text_fade"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Label3:modulate")
+tracks/0/path = NodePath("Day:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -546,7 +546,7 @@ resource_name = "day_text_fade_in"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Label3:modulate")
+tracks/0/path = NodePath("Day:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -671,25 +671,25 @@ position = Vector2(-28, 609)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-offset_left = 32.0
-offset_top = 13.0
-offset_right = 197.0
-offset_bottom = 72.0
+[node name="HP" type="Label" parent="CanvasLayer"]
+offset_left = 9.0
+offset_top = 47.0
+offset_right = 174.0
+offset_bottom = 116.0
 theme_override_font_sizes/font_size = 50
 text = "HP"
 script = SubResource("GDScript_xjm1u")
 
-[node name="Label2" type="Label" parent="CanvasLayer"]
-offset_left = 36.0
-offset_top = 73.0
-offset_right = 103.0
-offset_bottom = 115.0
+[node name="Gold" type="Label" parent="CanvasLayer"]
+offset_left = 10.0
+offset_top = 111.0
+offset_right = 77.0
+offset_bottom = 153.0
 theme_override_font_sizes/font_size = 30
 text = "Gold"
 script = SubResource("GDScript_1ykqy")
 
-[node name="Label3" type="Label" parent="CanvasLayer"]
+[node name="Day" type="Label" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0)
 offset_left = 458.0
 offset_top = 91.0
@@ -703,7 +703,7 @@ libraries = {
 "": SubResource("AnimationLibrary_0e585")
 }
 
-[node name="Label4" type="Label" parent="CanvasLayer"]
+[node name="Fps" type="Label" parent="CanvasLayer"]
 offset_left = 1069.0
 offset_top = 2.0
 offset_right = 1109.0
@@ -712,10 +712,10 @@ text = "fps:"
 script = ExtResource("19_qkx6x")
 
 [node name="HpBar" type="TextureProgressBar" parent="CanvasLayer"]
-offset_left = 3.0
-offset_top = 115.0
-offset_right = 154.0
-offset_bottom = 155.0
+offset_left = 2.0
+offset_top = 6.0
+offset_right = 153.0
+offset_bottom = 46.0
 value = 75.0
 nine_patch_stretch = true
 texture_under = ExtResource("14_weaxo")
