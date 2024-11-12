@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://d0emk7a06y3gh"]
+[gd_scene load_steps=55 format=3 uid="uid://d0emk7a06y3gh"]
 
 [ext_resource type="Script" path="res://Mobs/muchomor.gd" id="1_5x6cd"]
 [ext_resource type="Texture2D" uid="uid://cb2dmlhm8heol" path="res://Monsters_Creatures_Fantasy/Mushroom/Attack.png" id="1_lhl4x"]
@@ -649,6 +649,8 @@ radius = 115.018
 font_stretch = 125
 subpixel_positioning = 0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ovex8"]
+
 [node name="Muchomor" type="CharacterBody2D"]
 scale = Vector2(1, 0.993794)
 collision_layer = 4
@@ -697,7 +699,6 @@ position = Vector2(20, 0)
 disabled = false
 
 [node name="Detector" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -720,12 +721,20 @@ offset_bottom = -5.0
 theme_override_fonts/font = SubResource("SystemFont_u1yn1")
 theme_override_font_sizes/font_size = 70
 
+[node name="Default" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Default"]
+shape = SubResource("CapsuleShape2D_ovex8")
+
 [connection signal="body_entered" from="AttackDirection/AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="area_entered" from="AttackDirection/DamageBox/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
 [connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]
 [connection signal="damage_received" from="MobeHeals" to="." method="_on_mobe_heals_damage_received"]
 [connection signal="no_health" from="MobeHeals" to="." method="_on_mobe_heals_no_health"]
+[connection signal="body_entered" from="Default" to="." method="_on_default_body_entered"]
 
 [editable path="AttackDirection/DamageBox"]
 [editable path="MobeHeals"]
