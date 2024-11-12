@@ -190,16 +190,9 @@ func _on_damage_received (enemy_damage) :
 	else :
 		state = DAMAGE
 		health -= enemy_damage
-	
-	
-	emit_signal("health_changed", health)
-	print(health)
-	print(run_speed)
-	
-	
+			
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	Signals.emit_signal("player_attack",damage_current)
 	
-
-	
-	
+	emit_signal("health_changed", health)
+	print(health)

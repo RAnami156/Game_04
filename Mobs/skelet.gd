@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-@onready var animPlayer = $AnimatedSprite2D
+@onready var animPlayer = $AnimationPlayer
+@onready var fanta = $AnimatedSprite2D
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var player = null  
 var speed = 100
@@ -9,7 +10,8 @@ var chase = false
 enum {
 	IDLE,
 	RUN,
-	CHASE
+	CHASE,
+	ATTACK
 }
 
 var state: int = 0:
@@ -22,6 +24,8 @@ var state: int = 0:
 				run_state()
 			CHASE:
 				chase_state()
+			ATTACK:
+				attack_state()
 				
 func _ready():
 	Signals.connect("player_position_update", Callable(self, "_on_player_position_update"))
@@ -30,16 +34,18 @@ func _on_player_position_update(player_pos):
 	player = player_pos
 
 func _physics_process(delta: float) -> void:
-	if player != null:  # Проверка, что player определен
+	if player != null:  # Проверка
 		var direction = (player - self.position).normalized()
 		
 		if not is_on_floor():
 			velocity.y += gravity * delta
 	
 		if direction.x < 0:
-			animPlayer.flip_h = true
+			fanta.flip_h = true
+			$AttackDirection.rotation_degrees = 180
 		else:
-			animPlayer.flip_h = false
+			fanta.flip_h = false
+			$AttackDirection.rotation_degrees = 0
 		if state == CHASE:
 			chase_state()
 		if state == RUN:
@@ -56,7 +62,7 @@ func _on_detector_body_exited(body: Node2D) -> void:
 	
 func idle_state():
 	animPlayer.play("Idle")
-	velocity.x = 0  # Персонаж не двигается в состоянии покоя
+	velocity.x = 0
 	if chase:
 		state = CHASE
 
@@ -74,3 +80,15 @@ func chase_state():
 	velocity.x = direction.x * speed  
 	
 	state = RUN
+	
+func attack_state():
+	velocity.x = 0
+	animPlayer.play("Attack")
+	await animPlayer.animation_finished
+	state = IDLE  # Переход в состояние восстановления после атаки
+	
+	
+
+
+func _on_attack_rage_body_entered(body: Node2D) -> void:
+	state = ATTACK
