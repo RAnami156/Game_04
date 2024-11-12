@@ -17,6 +17,10 @@ enum {
 var state = MORNING
 var day_count: int
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("close"):
+		get_tree().change_scene_to_file("res://menu.tscn")
+		
 func _ready():
 	hp_bar.max_value = player.max_health
 	hp_bar.value = hp_bar.max_value 
@@ -65,3 +69,7 @@ func _on_player_health_changet(new_health):
 func _on_player_health_changed(new_health: Variant) -> void:
 	hp_bar.value = new_health
 	
+
+
+func _on_menu_pressed() -> void:
+	get_tree().change_scene_to_file("res://menu.tscn")

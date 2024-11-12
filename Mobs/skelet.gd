@@ -52,14 +52,17 @@ func _physics_process(delta: float) -> void:
 			run_state()
 		
 		move_and_slide()
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
+		
+func _on_detector_body_entered(body: Node2D) -> void:
 	chase = true
 	state = CHASE
 
+
 func _on_detector_body_exited(body: Node2D) -> void:
 	chase = false
-	
+	velocity.x = 0
+	state = IDLE
+		
 func idle_state():
 	animPlayer.play("Idle")
 	velocity.x = 0
@@ -78,7 +81,6 @@ func run_state():
 func chase_state():
 	var direction = (player - self.position).normalized()
 	velocity.x = direction.x * speed  
-	
 	state = RUN
 	
 func attack_state():

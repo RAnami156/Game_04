@@ -314,8 +314,8 @@ size = Vector2(36, 14)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1iwv0"]
 size = Vector2(29, 14)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_x8072"]
-radius = 113.159
+[sub_resource type="CircleShape2D" id="CircleShape2D_pllwi"]
+radius = 142.021
 
 [node name="Skelet" type="CharacterBody2D"]
 collision_layer = 7
@@ -345,6 +345,8 @@ shape = SubResource("RectangleShape2D_omjc7")
 script = ExtResource("5_4yw8p")
 
 [node name="HurtBox" type="Area2D" parent="AttackDirection/DamageBox"]
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackDirection/DamageBox/HurtBox"]
 shape = SubResource("CircleShape2D_cv84k")
@@ -367,13 +369,12 @@ position = Vector2(14.5, 1)
 shape = SubResource("RectangleShape2D_1iwv0")
 
 [node name="Detector" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
-shape = SubResource("CircleShape2D_x8072")
+shape = SubResource("CircleShape2D_pllwi")
 
 [connection signal="body_entered" from="AttackDirection/DamageBox/AttackRage" to="." method="_on_attack_rage_body_entered"]
-[connection signal="body_entered" from="Detector" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
 [connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]

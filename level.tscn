@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c622bgmfaqdx6"]
+[gd_scene load_steps=29 format=3 uid="uid://c622bgmfaqdx6"]
 
 [ext_resource type="PackedScene" uid="uid://rfewogk3wlcr" path="res://Player/player.tscn" id="1_8dss1"]
 [ext_resource type="Script" path="res://level.gd" id="1_eqx0y"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://dy8v1nmvav4md" path="res://shop.tscn" id="8_hce5p"]
 [ext_resource type="PackedScene" uid="uid://c0phno5qbfrrr" path="res://Mobs/skelet.tscn" id="9_lpo6b"]
 [ext_resource type="Texture2D" uid="uid://bl7heu265mlm1" path="res://circle.png" id="10_gpj8s"]
-[ext_resource type="PackedScene" uid="uid://br1eo3ui43m4q" path="res://pets/slime.tscn" id="11_n5e8l"]
 [ext_resource type="Texture2D" uid="uid://td3xsvaewhlw" path="res://oak_woods_v1.0/decorations/sign.png" id="12_qfro7"]
 [ext_resource type="PackedScene" uid="uid://cqhxdsykjuw2r" path="res://pets/bat.tscn" id="13_obxbg"]
 [ext_resource type="PackedScene" uid="uid://d0emk7a06y3gh" path="res://Mobs/muchomor.tscn" id="14_8w43m"]
@@ -641,8 +640,7 @@ position = Vector2(912, 544)
 position = Vector2(-595, 610)
 
 [node name="Skelet" parent="Monster" instance=ExtResource("9_lpo6b")]
-visible = false
-position = Vector2(132, 609)
+position = Vector2(-1694, 579)
 
 [node name="Dikor" type="Node2D" parent="."]
 
@@ -657,9 +655,6 @@ scale = Vector2(0.265, 0.245787)
 texture = ExtResource("10_gpj8s")
 
 [node name="Pets" type="Node2D" parent="."]
-
-[node name="Slime" parent="Pets" instance=ExtResource("11_n5e8l")]
-position = Vector2(-1343, 617)
 
 [node name="Bat" parent="Pets" instance=ExtResource("13_obxbg")]
 position = Vector2(-1037, 586)
@@ -725,6 +720,13 @@ tint_under = Color(1, 1, 1, 0.486275)
 tint_over = Color(0.534967, 0.362845, 0, 1)
 tint_progress = Color(0.570891, 0, 0.0632315, 1)
 
+[node name="Menu" type="Button" parent="CanvasLayer"]
+offset_left = 457.0
+offset_top = 10.0
+offset_right = 655.0
+offset_bottom = 49.0
+text = "Menu"
+
 [node name="Collect" type="Node2D" parent="."]
 script = SubResource("GDScript_pn4qe")
 
@@ -748,5 +750,6 @@ autostart = true
 occluder = SubResource("OccluderPolygon2D_6qpcv")
 
 [connection signal="health_changed" from="Player/Player" to="." method="_on_player_health_changed"]
+[connection signal="pressed" from="CanvasLayer/Menu" to="." method="_on_menu_pressed"]
 [connection signal="timeout" from="Collect/Timer" to="Collect" method="_on_timer_timeout"]
 [connection signal="timeout" from="DeyNight" to="." method="_on_dey_night_timeout"]
