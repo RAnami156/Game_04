@@ -179,7 +179,7 @@ func attack_freeze() :
 func damage_state() :
 	velocity.x = 0
 	anim.play("Damage")
-	await anim.animation_finished
+	#await anim.animation_finished
 	state = MOVE 
 	
 func _on_damage_received (enemy_damage) :
@@ -195,4 +195,4 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 	Signals.emit_signal("player_attack",damage_current)
 	
 	emit_signal("health_changed", health)
-	print(health)
+	#print(health)

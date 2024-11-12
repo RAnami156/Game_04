@@ -46,6 +46,10 @@ func _on_player_position_update(player_pos):
 	player = player_pos
 
 func _physics_process(delta):
+	#print(velocity.x)
+	if velocity.x == 0 and animPlayer.current_animation == "Run":
+		state = ATTACK
+
 	if is_dead:
 		return  # Остановить все физические обновления, если объект мертв
 
@@ -155,3 +159,9 @@ func _on_mobe_heals_damage_received() -> void:
 	if is_dead:
 		return  # Игнорировать повреждения, если объект мертв
 	state = DAMAGE
+
+
+func _on_default_body_entered(body: Node2D) -> void:
+	if is_dead:
+		return  # Игнорировать событие, если объект мертв
+	state = ATTACK
