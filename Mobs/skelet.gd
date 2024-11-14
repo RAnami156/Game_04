@@ -34,6 +34,8 @@ func _on_player_position_update(player_pos):
 	player = player_pos
 
 func _physics_process(delta: float) -> void:
+	if velocity.x == 0 and animPlayer.current_animation == "Run":
+		state = ATTACK
 	if player != null:  # Проверка
 		var direction = (player - self.position).normalized()
 		
