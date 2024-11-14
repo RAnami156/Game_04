@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://b2aer66bof4o1" path="res://oak_woods_v1.0/Sprite-0003.png" id="14_weaxo"]
 [ext_resource type="Texture2D" uid="uid://1wao1sfd3anp" path="res://oak_woods_v1.0/Sprite-0001.png" id="15_25vvw"]
 [ext_resource type="Texture2D" uid="uid://dffahsm26nh35" path="res://oak_woods_v1.0/Sprite-0002 (1).png" id="16_yvjxp"]
-[ext_resource type="Script" path="res://Player/label.gd" id="19_qkx6x"]
+[ext_resource type="PackedScene" uid="uid://cot7icotuyngr" path="res://utilse/interface.tscn" id="17_pxm1q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5cp8j"]
 texture = ExtResource("5_qyqw6")
@@ -698,14 +698,6 @@ libraries = {
 "": SubResource("AnimationLibrary_0e585")
 }
 
-[node name="Fps" type="Label" parent="CanvasLayer"]
-offset_left = 1069.0
-offset_top = 2.0
-offset_right = 1109.0
-offset_bottom = 25.0
-text = "fps:"
-script = ExtResource("19_qkx6x")
-
 [node name="HpBar" type="TextureProgressBar" parent="CanvasLayer"]
 offset_left = 2.0
 offset_top = 6.0
@@ -720,12 +712,7 @@ tint_under = Color(1, 1, 1, 0.486275)
 tint_over = Color(0.534967, 0.362845, 0, 1)
 tint_progress = Color(0.570891, 0, 0.0632315, 1)
 
-[node name="Menu" type="Button" parent="CanvasLayer"]
-offset_left = 457.0
-offset_top = 10.0
-offset_right = 655.0
-offset_bottom = 49.0
-text = "Menu"
+[node name="Interface" parent="." instance=ExtResource("17_pxm1q")]
 
 [node name="Collect" type="Node2D" parent="."]
 script = SubResource("GDScript_pn4qe")
@@ -738,6 +725,7 @@ autostart = true
 position = Vector2(25, 615)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
 energy = 0.95
 blend_mode = 1
 range_layer_min = -1
@@ -750,6 +738,5 @@ autostart = true
 occluder = SubResource("OccluderPolygon2D_6qpcv")
 
 [connection signal="health_changed" from="Player/Player" to="." method="_on_player_health_changed"]
-[connection signal="pressed" from="CanvasLayer/Menu" to="." method="_on_menu_pressed"]
 [connection signal="timeout" from="Collect/Timer" to="Collect" method="_on_timer_timeout"]
 [connection signal="timeout" from="DeyNight" to="." method="_on_dey_night_timeout"]

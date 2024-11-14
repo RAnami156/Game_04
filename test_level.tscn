@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d3a0uoguv5va6"]
+[gd_scene load_steps=10 format=3 uid="uid://d3a0uoguv5va6"]
 
 [ext_resource type="Script" path="res://test_level.gd" id="1_q07vd"]
 [ext_resource type="Texture2D" uid="uid://bhxnu5kqkrnmw" path="res://oak_woods_v1.0/oak_woods_tileset.png" id="1_qkwgy"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://rfewogk3wlcr" path="res://Player/player.tscn" id="3_pm02r"]
 [ext_resource type="Script" path="res://Player/label.gd" id="4_8tnni"]
 [ext_resource type="PackedScene" uid="uid://d0emk7a06y3gh" path="res://Mobs/muchomor.tscn" id="6_skpdx"]
+[ext_resource type="PackedScene" uid="uid://cot7icotuyngr" path="res://utilse/interface.tscn" id="7_po7dc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t38rb"]
 texture = ExtResource("1_qkwgy")
@@ -488,6 +489,7 @@ position = Vector2(-160, 578)
 position = Vector2(738, 608)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Fps" type="Label" parent="CanvasLayer"]
 offset_left = 1069.0
@@ -503,5 +505,7 @@ offset_top = 10.0
 offset_right = 655.0
 offset_bottom = 49.0
 text = "Menu"
+
+[node name="Interface" parent="." instance=ExtResource("7_po7dc")]
 
 [connection signal="pressed" from="CanvasLayer/Menu" to="." method="_on_button_pressed"]
