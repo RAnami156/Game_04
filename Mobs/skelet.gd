@@ -4,7 +4,7 @@ extends CharacterBody2D
 @onready var fanta = $AnimatedSprite2D
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var player = null  
-var speed = 100
+var speed = 80
 var chase = false
 
 enum {
